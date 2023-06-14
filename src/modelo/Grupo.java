@@ -29,4 +29,13 @@ public class Grupo extends Participante {
 		individuos.add(ind);
 	}
 	
+	
+	public void remover(String nome) {
+		for(int i=0;i<individuos.size();i++) {
+			if(individuos.get(i).getNome()==nome) {
+				individuos.remove(i);
+			}
+		}
+	}
+	
 }

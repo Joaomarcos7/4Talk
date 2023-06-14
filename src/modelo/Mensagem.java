@@ -6,15 +6,24 @@ import java.time.LocalDateTime;
 public class Mensagem {
 	
 	
-	private int id;
+	private static int id=0;
 	private String texto;
 	private Participante emitente;
 	private Participante destinatario;
 	private LocalDateTime datahora;
 	
 	
-	public Mensagem(int id, String texto, Participante emitente, Participante destinatario) {
-		this.id=id;
+	public Mensagem( int id,String texto, Participante emitente, Participante destinatario) {
+		Mensagem.id=id;
+		this.texto=texto;
+		this.emitente=emitente;
+		this.destinatario=destinatario;
+		this.datahora= LocalDateTime.now();
+		
+	}
+	
+	public Mensagem(String texto, Participante emitente, Participante destinatario) {
+		Mensagem.id=id++;
 		this.texto=texto;
 		this.emitente=emitente;
 		this.destinatario=destinatario;

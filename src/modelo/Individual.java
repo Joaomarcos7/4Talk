@@ -15,6 +15,13 @@ public class Individual extends Participante {
 		this.administrador=administrador;
 		// 
 	}
+	public Individual(String nome, String senha) {
+		super(nome);
+		this.senha=senha;
+		this.administrador=false;
+		// 
+	}
+
 
 	@Override
 	public String toString() {

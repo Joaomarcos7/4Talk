@@ -14,26 +14,47 @@ import modelo.Participante;
 public class Repositorio {
 
 	
-	TreeMap<String,Participante> participantes;
-	TreeMap <Integer,Mensagem> mensagens;
+	 static TreeMap<String,Participante> participantes;
+	 static TreeMap <Integer,Mensagem> mensagens;
 	
 	
 	
+	public static TreeMap<String,Participante> getparticipantes(){
+		return participantes;
+		
+	}
+
+	
+	public static TreeMap<Integer,Mensagem> getmensagens(){
+		return mensagens;
+		
+	}
 	
 	
-	private void adicionar(Participante participante) {
+	public  static void adicionar(Participante participante) {
 		// TODO Auto-generated method stub
 		participantes.put(participante.getNome(), participante);
 
 }
 
-	private void adicionar(Mensagem mensagem) {
+	public static void adicionar(Mensagem mensagem) {
 		mensagens.put(mensagem.getId(), mensagem);
 		
 	}
 	
+	public static void adicionar(Individual individuo) {
+		participantes.put(individuo.getNome(),individuo);
+		
+	}
+	
+	public static void adicionar(Grupo grupo) {
+		participantes.put(grupo.getNome(),grupo);
+		
+	}
+	
+	
 
-	private Participante localizarParticipante(String nome) {
+	public static Participante localizarParticipante(String nome) {
 		
 		for(Participante p : participantes.values()) {
 			if(p.getNome().equals(nome)) {
@@ -47,7 +68,7 @@ public class Repositorio {
 	
 	
 	
-	private Individual localizarIndividual(String nome) {
+	public  static Individual localizarIndividual(String nome) {
 		for(Participante p : participantes.values())
 			{
 				if(p instanceof Individual i &&  p.getNome().equals(nome) )	
@@ -60,11 +81,20 @@ public class Repositorio {
 		return null;
 	}
 	
+	public static Grupo localizarGrupo(String nome) {
+		for(Participante p : participantes.values()) {
+			
+			if(p instanceof Grupo g && p.getNome().equals(nome)) {
+				return g;
+			}
+			
+		}
+		return null;
+	}
 	
 	
 	
-	
-	private Mensagem localizarMensagem(Integer id) {
+	public static Mensagem localizarMensagem(Integer id) {
 	
 
 		for(Mensagem m : mensagens.values()) {
@@ -79,7 +109,7 @@ public class Repositorio {
 	
 	
 	
-	private ArrayList<Grupo> getGrupos(){
+	public  static ArrayList<Grupo> getGrupos(){
 		
 		ArrayList<Grupo> grupos= new ArrayList<>();
 		
@@ -95,7 +125,7 @@ public class Repositorio {
 	
 	
 	
-	private ArrayList<Individual> getIndividuos(){
+	public static ArrayList<Individual> getIndividuos(){
 		
 		ArrayList<Individual> individuos= new ArrayList<>();
 		
@@ -146,7 +176,7 @@ public class Repositorio {
 				senha = partes[1];
 				administrador = partes[2];
 				Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
-				this.adicionar(ind);
+				Repositorio.adicionar(ind);
 			}
 			arquivo1.close();
 		}
@@ -168,10 +198,10 @@ public class Repositorio {
 				grupo = new Grupo(nome);
 				if(partes.length>1)
 					for(int i=1; i< partes.length; i++) {
-						individuo = this.localizarIndividual(partes[i]);
+						individuo = Repositorio.localizarIndividual(partes[i]);
 						grupo.adicionar(individuo);
 					}
-				this.adicionar(grupo);
+				Repositorio.adicionar(grupo);
 			}
 			arquivo2.close();
 		}
@@ -194,10 +224,10 @@ public class Repositorio {
 				nomeemitente = partes[1];
 				nomedestinatario = partes[2];
 				texto = partes[3];
-				emitente = this.localizarParticipante(nomeemitente);
-				destinatario = this.localizarParticipante(nomedestinatario);
+				emitente = Repositorio.localizarParticipante(nomeemitente);
+				destinatario = Repositorio.localizarParticipante(nomedestinatario);
 				m = new Mensagem(Integer.parseInt(id),texto,emitente,destinatario);
-				this.adicionar(m);
+				Repositorio.adicionar(m);
 			} 
 			arquivo3.close();
 		}
@@ -236,7 +266,7 @@ public class Repositorio {
 		try	{
 			File f = new File( new File(".\\individuos.csv").getCanonicalPath())  ;
 			FileWriter arquivo2 = new FileWriter(f) ; 
-			for(Individual ind : this.getIndividuos()) {
+			for(Individual ind : Repositorio.getIndividuos()) {
 				arquivo2.write(ind.getNome() +";"+ ind.getSenha() +";"+ ind.getAdministrador() +"\n");	
 			} 
 			arquivo2.close();
@@ -248,7 +278,7 @@ public class Repositorio {
 		try	{
 			File f = new File( new File(".\\grupos.csv").getCanonicalPath())  ;
 			FileWriter arquivo3 = new FileWriter(f) ; 
-			for(Grupo g : this.getGrupos()) {
+			for(Grupo g : Repositorio.getGrupos()) {
 				String texto="";
 				for(Individual ind : g.getIndividuos()) {
 					texto += ";" + ind.getNome();
