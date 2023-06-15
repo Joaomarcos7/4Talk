@@ -55,5 +55,29 @@ public class Participante {
 		this.enviadas = enviadas;
 	}
 	
+	public Mensagem localizarEnviada(int id) {
+		
+		for(Mensagem m : this.getEnviadas()) {
+			if(m.getId()==id) {
+				return m;
+			}
+		}
+		return null;
+		}
+	
+	
+	public void removerEnviada(Mensagem msg) {
+		
+		this.getEnviadas().remove(msg);
+		
+	}
+	
+	
+	public void removerRecebida(Mensagem msg) {
+		
+		this.getRecebidas().remove(msg);
+		
+	}
+	
 	
 }

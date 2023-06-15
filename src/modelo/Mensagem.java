@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 public class Mensagem {
 	
 	
-	private static int id=0;
+	private static int id;
 	private String texto;
 	private Participante emitente;
 	private Participante destinatario;
@@ -21,15 +21,7 @@ public class Mensagem {
 		this.datahora= LocalDateTime.now();
 		
 	}
-	
-	public Mensagem(String texto, Participante emitente, Participante destinatario) {
-		Mensagem.id=id++;
-		this.texto=texto;
-		this.emitente=emitente;
-		this.destinatario=destinatario;
-		this.datahora= LocalDateTime.now();
-		
-	}
+
 
 
 	public int getId() {
@@ -38,7 +30,7 @@ public class Mensagem {
 
 
 	public void setId(int id) {
-		this.id = id;
+		Mensagem.id = id;
 	}
 
 
@@ -87,6 +79,8 @@ public class Mensagem {
 		return "Mensagem [id=" + id + ", texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
 				+ ", datahora=" + datahora + "]";
 	}
+	
+	
 
 	
 
