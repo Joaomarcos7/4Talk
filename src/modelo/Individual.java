@@ -7,7 +7,7 @@ public class Individual extends Participante {
 	
 	private String senha;
 	 private boolean administrador;
-	 private ArrayList<Grupo> grupos;
+	 private ArrayList<Grupo> grupos=new ArrayList<>();
 	
 	public Individual(String nome, String senha, boolean administrador) {
 		super(nome);

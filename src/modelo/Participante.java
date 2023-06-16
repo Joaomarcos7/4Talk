@@ -6,8 +6,8 @@ public class Participante {
 	
 	
 	 private String nome;
-	private ArrayList<Mensagem> recebidas;
-	private ArrayList<Mensagem> enviadas;
+	private ArrayList<Mensagem> recebidas=new ArrayList<>();
+	private ArrayList<Mensagem> enviadas= new ArrayList<>();
 	
 	
 	public Participante(String nome) {
@@ -41,8 +41,8 @@ public class Participante {
 	}
 
 
-	public void setRecebidas(ArrayList<Mensagem> recebidas) {
-		this.recebidas = recebidas;
+	public void setRecebidas(Mensagem recebidas) {
+		this.recebidas.add(recebidas);
 	}
 
 
@@ -51,8 +51,8 @@ public class Participante {
 	}
 
 
-	public void setEnviadas(ArrayList<Mensagem> enviadas) {
-		this.enviadas = enviadas;
+	public void setEnviadas(Mensagem enviada) {
+		this.enviadas.add(enviada);
 	}
 	
 	public Mensagem localizarEnviada(int id) {

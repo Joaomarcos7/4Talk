@@ -14,8 +14,8 @@ import modelo.Participante;
 public class Repositorio {
 
 	
-	  TreeMap<String,Participante> participantes;
-	  TreeMap <Integer,Mensagem> mensagens;
+	  TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
+	  TreeMap <Integer,Mensagem> mensagens=new TreeMap<Integer,Mensagem>();
 	
 	
 	

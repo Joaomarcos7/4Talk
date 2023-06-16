@@ -1,24 +1,25 @@
 package modelo;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 public class Mensagem {
 	
 	
-	private static int id;
+	private int id;
 	private String texto;
 	private Participante emitente;
 	private Participante destinatario;
-	private LocalDateTime datahora;
+	private String datahora;
 	
 	
 	public Mensagem( int id,String texto, Participante emitente, Participante destinatario) {
-		Mensagem.id=id;
+		this.id=id;
 		this.texto=texto;
 		this.emitente=emitente;
 		this.destinatario=destinatario;
-		this.datahora= LocalDateTime.now();
+		this.datahora= LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 		
 	}
 
@@ -30,7 +31,7 @@ public class Mensagem {
 
 
 	public void setId(int id) {
-		Mensagem.id = id;
+		this.id = id;
 	}
 
 
@@ -64,12 +65,12 @@ public class Mensagem {
 	}
 
 
-	public LocalDateTime getDatahora() {
+	public String getDatahora() {
 		return datahora;
 	}
 
 
-	public void setDatahora(LocalDateTime datahora) {
+	public void setDatahora(String datahora) {
 		this.datahora = datahora;
 	}
 
