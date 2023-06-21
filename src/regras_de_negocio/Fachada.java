@@ -15,6 +15,7 @@ import repositorio.Repositorio;
 public class Fachada {
 
 	private static Repositorio repositorio= new Repositorio();
+	
 	private static int cont=0;
 	
 	public  static void criarIndividuo(String nome, String senha) throws Exception {
@@ -162,10 +163,12 @@ public class Fachada {
 		
 		if (destinatario instanceof Grupo g ) { //verifica se nesse caso estamos enviando uma mensagem para um destinatario tipo Grupo
 			for(Individual i : g.getIndividuos()) {
+				if(i.getNome() != emitente.getNome()){ //verificao pra mandar msg no grupo caso seja diferente do emitente (no grupo)
 				Mensagem msg= new Mensagem(cont,texto,destinatario,i);
 				destinatario.setEnviadas(msg);
 				i.setRecebidas(msg); 
 				repositorio.adicionar(msg);
+				}
 			}
 		}
 		
@@ -176,6 +179,8 @@ public class Fachada {
 		
 		
 	}
+
+	//class Mensagem: private int id=0;
 	
 	
 	
