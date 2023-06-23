@@ -331,10 +331,13 @@ public class Fachada {
 			}
 		}
 		
+		
+		
 		for(Mensagem m : repositorio.getmensagens().values()) {
-				String[] array= m.getTexto().split("");
+				String[] array= m.getTexto().split(" ");
+				
 				for(String s : array) {
-						if(s==termo) {
+						if(s.equals(termo)) {
 							msgs.add(m);
 						}
 				}
@@ -360,7 +363,7 @@ public class Fachada {
 		ArrayList<Individual> users= repositorio.getIndividuos();
 		ArrayList<String> lista= new ArrayList<>();
 		
-		for(Individual i : users) {
+		for(Participante i : users) {
 			
 			if(i.getEnviadas().isEmpty()) {
 				lista.add(i.getNome());

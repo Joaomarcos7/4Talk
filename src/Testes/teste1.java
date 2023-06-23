@@ -6,6 +6,7 @@ import modelo.Grupo;
 import modelo.Individual;
 import modelo.Mensagem;
 import regras_de_negocio.Fachada;
+import repositorio.Repositorio;
 
 public class teste1 {
 
@@ -63,6 +64,7 @@ public class teste1 {
 		 */
 
 		try {
+			Fachada.criarIndividuo("alic", "241223");
 			System.out.println("\ncriar grupos");
 			Fachada.criarGrupo("grupo1");
 			Fachada.criarGrupo("grupo2");
@@ -156,12 +158,13 @@ public class teste1 {
 		
 		System.out.println("\n*******************************************************");
 		try {
-			Fachada.criarAdministrador("admin", "admin");
+			Fachada.criarAdministrador("admin", "vamos");
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
 		
 		try {
+			
 			System.out.println("ESPIONAR");
 			for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
 				System.out.println(m);
@@ -169,16 +172,28 @@ public class teste1 {
 			System.out.println("\nAUSENTES");
 			for(String nome : Fachada.ausentes("admin"))
 				System.out.println(nome);
+		
 			
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
+			
 		}
 
+		
+		
+		
+		
+		
 
 		System.out.println("fim do programa");
 	}
 
 
+	
+	
+	
+	
+	
 
 	//=================================================
 	public static void main(String[] args) {
