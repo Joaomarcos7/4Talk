@@ -1,6 +1,7 @@
 package repositorio;
 
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -251,7 +252,34 @@ public class Repositorio {
 
 
 
-
+public int GetUltimoId() { //Tenho que testar ainda!!!
+	try {
+		File f=new File( new File(".\\mensagens.csv").getCanonicalPath());
+		
+		Scanner arquivo1= new Scanner(f);
+		
+		int cont=0;
+		
+		while(arquivo1.hasNextLine()) {
+			cont++; //pega o numero de linhas do arquivo
+		}
+		
+		
+		for(int i=1;i<=cont;i++) {
+			String texto=arquivo1.nextLine();
+			if (i==cont){ //se for a ultima linha ent ele pega o ID
+				String[] array=texto.split(";");
+				String id= array[0];
+			return 	Integer.parseInt(id);
+			}
+		}
+	}
+	
+	catch(Exception e) {
+		System.out.println(e.getMessage());
+	}
+	return 0;
+}
 
 
 

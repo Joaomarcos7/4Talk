@@ -360,7 +360,7 @@ public class Fachada {
 			throw new Exception(nomeadmin + "não é um administrador do sistema");
 		}
 		
-		ArrayList<Individual> users= repositorio.getIndividuos();
+		Collection<Participante> users= repositorio.getparticipantes().values();
 		ArrayList<String> lista= new ArrayList<>();
 		
 		for(Participante i : users) {
