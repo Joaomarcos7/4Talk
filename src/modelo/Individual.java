@@ -20,7 +20,7 @@ public class Individual extends Participante {
 
 	@Override
 	public String toString() {
-		return "Individual [senha=" + senha + ", administrador=" + administrador + ", grupos=" + grupos + "]";
+		return super.toString();
 	}
 
 	public String getSenha() {
