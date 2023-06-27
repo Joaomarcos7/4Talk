@@ -77,7 +77,7 @@ public class Mensagem {
 
 	@Override
 	public String toString() {
-		return "Mensagem [id=" + id + ", texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
+		return "" + id + ": texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
 				+ ", datahora=" + datahora + "]";
 	}
 	

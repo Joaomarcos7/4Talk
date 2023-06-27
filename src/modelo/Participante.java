@@ -22,7 +22,7 @@ public class Participante {
 
 	@Override
 	public String toString() {
-		return "Participante [nome=" + nome + ", recebidas=" + recebidas + ", enviadas=" + enviadas + "]";
+		return "Nome:" + nome;
 	}
 
 

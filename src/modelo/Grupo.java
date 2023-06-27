@@ -14,7 +14,7 @@ public class Grupo extends Participante {
 
 	@Override
 	public String toString() {
-		return "Grupo [individuos=" + individuos + "]";
+		return "Grupo:" +super.getNome();
 	}
 
 	public ArrayList<Individual> getIndividuos() {
