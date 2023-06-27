@@ -18,7 +18,27 @@ public class Repositorio {
 	  TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
 	  TreeMap <Integer,Mensagem> mensagens=new TreeMap<Integer,Mensagem>();
 	
-	
+	  
+	  
+	  
+	  public Repositorio() {
+		  this.carregarObjetos();
+	  }
+	  
+	  
+	public int GerarId() {
+		if(mensagens.isEmpty()) {
+			return 1;
+		}
+		
+		Integer ultchave= mensagens.lastKey();
+		
+		Mensagem ultmsg = mensagens.get(ultchave);
+		
+		return ultmsg.getId()+1;
+		
+		
+	}
 	
 	public  TreeMap<String,Participante> getparticipantes(){
 		return participantes;
@@ -252,11 +272,11 @@ public class Repositorio {
 
 
 
-public int GetUltimoId() { //Tenho que testar ainda!!!
-	try {
-		File f=new File( new File(".\\mensagens.csv").getCanonicalPath());
-		
-		Scanner arquivo1= new Scanner(f);
+//public int GetUltimoId() { //Tenho que testar ainda!!!
+//	try {
+		///File f=new File( new File(".\\mensagens.csv").getCanonicalPath());
+	
+/*		Scanner arquivo1= new Scanner(f);
 		
 		int cont=0;
 		
@@ -280,7 +300,7 @@ public int GetUltimoId() { //Tenho que testar ainda!!!
 	}
 	return 0;
 }
-
+*/
 
 
 

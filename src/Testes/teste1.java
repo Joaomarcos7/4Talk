@@ -1,5 +1,6 @@
 package Testes;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import modelo.Grupo;
@@ -20,6 +21,7 @@ public class teste1 {
 			Fachada.criarIndividuo("joao", "123");
 			Fachada.criarIndividuo("maria", "123");
 			Fachada.criarIndividuo("jose", "123");
+			Fachada.criarIndividuo("joao","senha2213");
 			System.out.println("criou individuos");
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
@@ -164,7 +166,7 @@ public class teste1 {
 		}
 		
 		try {
-			
+			System.out.println(new File(".\\mensagens.csv").getCanonicalPath().toString());
 			System.out.println("ESPIONAR");
 			for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
 				System.out.println(m);

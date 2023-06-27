@@ -16,7 +16,6 @@ public class Fachada {
 
 	private static Repositorio repositorio= new Repositorio();
 	
-	private static int cont=0;
 	
 	public  static void criarIndividuo(String nome, String senha) throws Exception {
 		if(nome.isEmpty()) 
@@ -28,6 +27,7 @@ public class Fachada {
 			
 			Individual individuo = new Individual(nome,senha, false);
 			repositorio.adicionar(individuo);	
+			repositorio.salvarObjetos();
 		}
 		else {
 		Participante p = repositorio.localizarParticipante(nome);
@@ -37,6 +37,7 @@ public class Fachada {
 
 		Individual individuo = new Individual(nome,senha, false);
 		repositorio.adicionar(individuo);
+		repositorio.salvarObjetos();
 		}
 		
 	}
@@ -69,6 +70,7 @@ public class Fachada {
 			
 			Individual individuo = new Individual(nome,senha,true);
 			repositorio.adicionar(individuo);	
+			repositorio.salvarObjetos();
 		}
 		
 		else { //verificamos se existe outro participante 
@@ -79,6 +81,7 @@ public class Fachada {
 
 		Individual individuo = new Individual(nome,senha,true);
 		repositorio.adicionar(individuo);	
+		repositorio.salvarObjetos();
 		}
 		
 	}
@@ -93,6 +96,7 @@ public class Fachada {
 		if(repositorio.getparticipantes().isEmpty()) {
 			Grupo grupo= new Grupo(nome);
 			repositorio.adicionar(grupo);
+			repositorio.salvarObjetos();
 		}
 		
 		else {
@@ -103,6 +107,7 @@ public class Fachada {
 
 		Grupo grupo= new Grupo(nome);
 		repositorio.adicionar(grupo);
+		repositorio.salvarObjetos();
 		}
 	}
 	
@@ -158,8 +163,8 @@ public class Fachada {
 		if(destinatario instanceof Grupo g && repositorio.localizarGrupo(g.getNome())==null)
 			throw new Exception("criar mensagem - grupo nao permitido:" + nomedest);
 		
-		cont++; //INCREMENTAÇÃO DO ID, OU SEJA, TODA VEZ Q CRIARMOS UMA MENSAGEM USANDO O METODO ESTAREMOS INCREMENTANDO A PROPRIEDADE CONT DA FACHADA PRA +1 QUE NO FINAL SERA O ID SEQUENCIAL DA MENSAGEM 
-		
+		 //INCREMENTAÇÃO DO ID, OU SEJA, TODA VEZ Q CRIARMOS UMA MENSAGEM USANDO O METODO ESTAREMOS INCREMENTANDO A PROPRIEDADE CONT DA FACHADA PRA +1 QUE NO FINAL SERA O ID SEQUENCIAL DA MENSAGEM 
+		int cont= repositorio.GerarId();
 		
 		if (destinatario instanceof Grupo g ) { //verifica se nesse caso estamos enviando uma mensagem para um destinatario tipo Grupo
 			for(Individual i : g.getIndividuos()) {
@@ -168,6 +173,7 @@ public class Fachada {
 				destinatario.setEnviadas(msg);
 				i.setRecebidas(msg); 
 				repositorio.adicionar(msg);
+				repositorio.salvarObjetos();
 				}
 			}
 		}
@@ -176,7 +182,7 @@ public class Fachada {
 		emitente.setEnviadas(mensagem); //adiciono objeto mensagem no enviados do emitente
 		destinatario.setRecebidas(mensagem); //adiciono objeto mensagem no recebidos do destinatario
 		repositorio.adicionar(mensagem); //adiciona msg no repositorio 
-		
+		repositorio.salvarObjetos();
 		
 	}
 
@@ -247,6 +253,7 @@ public class Fachada {
 		Participante destinatario = m.getDestinatario();
 		destinatario.removerRecebida(m);
 		repositorio.remover(m);	
+		repositorio.salvarObjetos();
 
 		if(destinatario instanceof Grupo g) {
 			ArrayList<Mensagem> lista = destinatario.getEnviadas();
@@ -256,6 +263,7 @@ public class Fachada {
 					if(t.getId() == m.getId()) {
 						t.getDestinatario().removerRecebida(t);
 						repositorio.remover(t);	
+						repositorio.salvarObjetos();
 						return true;		//apaga mensagem da lista
 					}
 					else
