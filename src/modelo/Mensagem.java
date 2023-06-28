@@ -11,15 +11,15 @@ public class Mensagem {
 	private String texto;
 	private Participante emitente;
 	private Participante destinatario;
-	private String datahora;
+	private LocalDateTime datahora;
 	
 	
-	public Mensagem( int id,String texto, Participante emitente, Participante destinatario) {
+	public Mensagem( int id,String texto, Participante emitente, Participante destinatario,LocalDateTime datahora) {
 		this.id=id;
 		this.texto=texto;
 		this.emitente=emitente;
 		this.destinatario=destinatario;
-		this.datahora= LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+		this.datahora= datahora;
 		
 	}
 
@@ -65,12 +65,12 @@ public class Mensagem {
 	}
 
 
-	public String getDatahora() {
+	public LocalDateTime getDatahora() {
 		return datahora;
 	}
 
 
-	public void setDatahora(String datahora) {
+	public void setDatahora(LocalDateTime datahora) {
 		this.datahora = datahora;
 	}
 

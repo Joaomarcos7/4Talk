@@ -3,6 +3,8 @@ package repositorio;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
@@ -33,9 +35,8 @@ public class Repositorio {
 		
 		Integer ultchave= mensagens.lastKey();
 		
-		Mensagem ultmsg = mensagens.get(ultchave);
 		
-		return ultmsg.getId()+1;
+		return ultchave +1;
 		
 		
 	}
@@ -258,7 +259,7 @@ public class Repositorio {
 				texto = partes[3];
 				emitente = this.localizarParticipante(nomeemitente);
 				destinatario = this.localizarParticipante(nomedestinatario);
-				m = new Mensagem(Integer.parseInt(id),texto,emitente,destinatario);
+				m = new Mensagem(Integer.parseInt(id),texto,emitente,destinatario,LocalDateTime.now());
 				this.adicionar(m);
 			} 
 			arquivo3.close();
@@ -268,7 +269,6 @@ public class Repositorio {
 		}
 
 	}
-
 
 
 

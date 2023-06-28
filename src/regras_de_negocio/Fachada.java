@@ -1,5 +1,7 @@
 package regras_de_negocio;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -101,6 +103,7 @@ public class Fachada {
 		
 		else {
 		Participante p = repositorio.localizarParticipante(nome);
+		
 		if(p != null) 
 			throw new Exception("criar Grupo - nome ja existe:" + nome);
 
@@ -128,7 +131,7 @@ public class Fachada {
 	
 	
 	
-	public static void removerGrupo(String nomegrupo,String nomeind) throws Exception {
+	public static void removerGrupo(String nomeind,String nomegrupo) throws Exception {
 		
 		if(nomeind.isEmpty() || nomegrupo.isEmpty()) 
 			throw new Exception("Remove Grupo - nome fornecido vazio");
@@ -169,7 +172,7 @@ public class Fachada {
 		if (destinatario instanceof Grupo g ) { //verifica se nesse caso estamos enviando uma mensagem para um destinatario tipo Grupo
 			for(Individual i : g.getIndividuos()) {
 				if(i.getNome() != emitente.getNome()){ //verificao pra mandar msg no grupo caso seja diferente do emitente (no grupo)
-				Mensagem msg= new Mensagem(cont,texto,destinatario,i);
+				Mensagem msg= new Mensagem(cont,texto,destinatario,i,LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))); 
 				destinatario.setEnviadas(msg);
 				i.setRecebidas(msg); 
 				repositorio.adicionar(msg);
@@ -178,7 +181,7 @@ public class Fachada {
 			}
 		}
 		
-		Mensagem mensagem = new Mensagem(cont,texto,emitente,destinatario); //cria objeto de mensagem relacionando emitente e dest
+		Mensagem mensagem = new Mensagem(cont,texto,emitente,destinatario,LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))); //cria objeto de mensagem relacionando emitente e dest
 		emitente.setEnviadas(mensagem); //adiciono objeto mensagem no enviados do emitente
 		destinatario.setRecebidas(mensagem); //adiciono objeto mensagem no recebidos do destinatario
 		repositorio.adicionar(mensagem); //adiciona msg no repositorio 
@@ -223,6 +226,7 @@ public class Fachada {
 					conversa.add(m);
 				}
 			}
+			
 			
 			//Ordenação da conversa para ter as mensagens em ordem CRONOLOGICA
 			
@@ -297,8 +301,6 @@ public class Fachada {
 	public  static ArrayList<Individual> listarIndividuos()
 	{
 		ArrayList<Individual> ind= repositorio.getIndividuos();
-		
-		
 		return ind;
 	}
 

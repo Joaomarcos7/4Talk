@@ -7,7 +7,6 @@ import modelo.Grupo;
 import modelo.Individual;
 import modelo.Mensagem;
 import regras_de_negocio.Fachada;
-import repositorio.Repositorio;
 
 public class teste1 {
 
@@ -70,7 +69,10 @@ public class teste1 {
 			System.out.println("\ncriar grupos");
 			Fachada.criarGrupo("grupo1");
 			Fachada.criarGrupo("grupo2");
+			Fachada.criarGrupo("grupo3");
 			System.out.println("criou grupos");
+			
+			System.out.println(Fachada.listarGrupos());
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
@@ -166,7 +168,6 @@ public class teste1 {
 		}
 		
 		try {
-			System.out.println(new File(".\\mensagens.csv").getCanonicalPath().toString());
 			System.out.println("ESPIONAR");
 			for(Mensagem m : Fachada.espionarMensagens("admin", "projeto"))
 				System.out.println(m);
