@@ -17,8 +17,8 @@ import modelo.Participante;
 public class Repositorio {
 
 	
-	  TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
-	  TreeMap <Integer,Mensagem> mensagens=new TreeMap<Integer,Mensagem>();
+	   TreeMap<String,Participante> participantes= new TreeMap<String,Participante>();
+	  ArrayList<Mensagem> mensagens= new ArrayList<>(); 
 	
 	  
 	  
@@ -33,7 +33,7 @@ public class Repositorio {
 			return 1;
 		}
 		
-		Integer ultchave= mensagens.lastKey();
+		Integer ultchave= mensagens.get(mensagens.size()-1).getId();
 		
 		
 		return ultchave +1;
@@ -47,7 +47,7 @@ public class Repositorio {
 	}
 
 	
-	public  TreeMap<Integer,Mensagem> getmensagens(){
+	public  ArrayList<Mensagem> getmensagens(){
 		return mensagens;
 		
 	}
@@ -60,7 +60,7 @@ public class Repositorio {
 }
 
 	public  void adicionar(Mensagem mensagem) {
-		mensagens.put(mensagem.getId(), mensagem);
+		mensagens.add(mensagem);
 		
 	}
 	
@@ -124,7 +124,7 @@ public class Repositorio {
 	public  Mensagem localizarMensagem(Integer id) {
 	
 
-		for(Mensagem m : mensagens.values()) {
+		for(Mensagem m : mensagens) {
 			if(m.getId() == id) {
 				return m;
 			}
@@ -169,7 +169,7 @@ public class Repositorio {
 	
 	public void remover(Mensagem m) {
 		 
-		this.mensagens.remove(m.getId());
+		this.mensagens.remove(m);
 		
 	}
 	
@@ -310,7 +310,7 @@ public class Repositorio {
 		try	{
 			File f = new File( new File(".\\mensagens.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
-			for(Mensagem m : mensagens.values()) 	{      //mensagens.values() e nao mensagens!!!!
+			for(Mensagem m : mensagens) 	{      //mensagens.values() e nao mensagens!!!!
 				arquivo1.write(	m.getId()+";"+
 						m.getEmitente().getNome()+";"+
 						m.getDestinatario().getNome()+";"+

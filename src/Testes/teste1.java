@@ -1,6 +1,7 @@
 package Testes;
 
 import java.io.File;
+
 import java.util.ArrayList;
 
 import modelo.Grupo;
@@ -132,6 +133,7 @@ public class teste1 {
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
+		
 
 		try {
 			System.out.println("\nremover jose do grupo");

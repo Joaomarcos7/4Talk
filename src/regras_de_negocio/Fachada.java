@@ -46,14 +46,22 @@ public class Fachada {
 	
 	
 	
-	public static boolean validarIndividuo(String nomeindividuo,String senha) {
+	
+	
+	public static Individual validarIndividuo(String nomeindividuo,String senha) throws Exception {
 		
-		if(repositorio.localizarIndividual(nomeindividuo)!=null)
+		if(repositorio.localizarIndividual(nomeindividuo)==null)
 		{
-			return true;
+			throw new Exception("Indivíduo não existe!");
 		}
-		
-		return false;
+		else {
+			if(senha.equals(repositorio.localizarIndividual(nomeindividuo).getSenha())) {
+				return repositorio.localizarIndividual(nomeindividuo);
+			}
+			else {
+				throw new Exception("Senha inválida pra esse individuo");
+			}
+		}
 		
 		
 	}
@@ -98,6 +106,7 @@ public class Fachada {
 		if(repositorio.getparticipantes().isEmpty()) {
 			Grupo grupo= new Grupo(nome);
 			repositorio.adicionar(grupo);
+			System.out.println(repositorio.getGrupos() + "GRUPOSSSSSSSSSSSSSSSSSSSS");
 			repositorio.salvarObjetos();
 		}
 		
@@ -126,6 +135,8 @@ public class Fachada {
 		Grupo grupo = repositorio.localizarGrupo(nomegrupo);
 		
 		grupo.adicionar(ind);
+		repositorio.adicionar(grupo);
+		repositorio.salvarObjetos();
 		
 	}
 	
@@ -144,7 +155,7 @@ public class Fachada {
 		
 		
 		grupo.remover(nomeind);
-	
+		repositorio.salvarObjetos();
 		
 	}
 	
@@ -163,30 +174,36 @@ public class Fachada {
 		if(destinatario == null) 
 			throw new Exception("criar mensagem - destinatario nao existe:" + nomedest);
 
-		if(destinatario instanceof Grupo g && repositorio.localizarGrupo(g.getNome())==null)
-			throw new Exception("criar mensagem - grupo nao permitido:" + nomedest);
 		
 		 //INCREMENTAÇÃO DO ID, OU SEJA, TODA VEZ Q CRIARMOS UMA MENSAGEM USANDO O METODO ESTAREMOS INCREMENTANDO A PROPRIEDADE CONT DA FACHADA PRA +1 QUE NO FINAL SERA O ID SEQUENCIAL DA MENSAGEM 
-		int cont= repositorio.GerarId();
+		int idmsg= repositorio.GerarId();
 		
-		if (destinatario instanceof Grupo g ) { //verifica se nesse caso estamos enviando uma mensagem para um destinatario tipo Grupo
+		if (destinatario instanceof Grupo g ) {
+			Mensagem mensagem= new Mensagem(idmsg,texto,emitente,g,LocalDateTime.now());
+			emitente.setEnviadas(mensagem);
+			g.setRecebidas(mensagem);
+			repositorio.adicionar(mensagem);
+			
+			//verifica se nesse caso estamos enviando uma mensagem para um destinatario tipo Grupo 
+			//CRIACAO DE COPIAS
 			for(Individual i : g.getIndividuos()) {
 				if(i.getNome() != emitente.getNome()){ //verificao pra mandar msg no grupo caso seja diferente do emitente (no grupo)
-				Mensagem msg= new Mensagem(cont,texto,destinatario,i,LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))); 
-				destinatario.setEnviadas(msg);
+				Mensagem msg= new Mensagem(idmsg,emitente.getNome()+"/"+texto,g,i,LocalDateTime.now()); 
+				g.setEnviadas(msg);
 				i.setRecebidas(msg); 
-				repositorio.adicionar(msg);
+				repositorio.adicionar(msg); //adicionando ao repositorio
 				repositorio.salvarObjetos();
 				}
 			}
 		}
 		
-		Mensagem mensagem = new Mensagem(cont,texto,emitente,destinatario,LocalDateTime.parse(LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")),DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"))); //cria objeto de mensagem relacionando emitente e dest
+		else {
+		Mensagem mensagem = new Mensagem(idmsg,texto,emitente,destinatario,LocalDateTime.now()); //cria objeto de mensagem relacionando emitente e dest
 		emitente.setEnviadas(mensagem); //adiciono objeto mensagem no enviados do emitente
 		destinatario.setRecebidas(mensagem); //adiciono objeto mensagem no recebidos do destinatario
 		repositorio.adicionar(mensagem); //adiciona msg no repositorio 
 		repositorio.salvarObjetos();
-		
+		}
 	}
 
 	//class Mensagem: private int id=0;
@@ -202,7 +219,7 @@ public class Fachada {
 
 		Participante destinatario = repositorio.localizarParticipante(nomedest);	
 		if(destinatario == null) 
-			throw new Exception("Uusário destinitário nao encontrado");
+			throw new Exception("Uusário destinatário nao encontrado");
 
 		
 			ArrayList<Mensagem> enviadas= emitente.getEnviadas();
@@ -241,6 +258,14 @@ public class Fachada {
 	
 	
 	
+	/*public static LocalDateTime formataData(LocalDateTime now) {
+			
+			String datahora=now.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
+			
+			return LocalDateTime.parse(datahora);
+			
+			
+		}*/
 	
 	
 	
@@ -255,28 +280,29 @@ public class Fachada {
 
 		emitente.removerEnviada(m);
 		Participante destinatario = m.getDestinatario();
+		
+		
+		
+		if(destinatario instanceof Grupo g) {
+			g.removerRecebida(m);
+			repositorio.remover(m);
+			
+			for(Mensagem msg : g.getEnviadas()) {
+				if(msg.getId()==m.getId())
+				{
+					g.removerEnviada(msg);
+					msg.getDestinatario().removerRecebida(msg);
+					repositorio.remover(msg);
+				}
+				
+			}
+			repositorio.salvarObjetos();
+		}
 		destinatario.removerRecebida(m);
 		repositorio.remover(m);	
 		repositorio.salvarObjetos();
 
-		if(destinatario instanceof Grupo g) {
-			ArrayList<Mensagem> lista = destinatario.getEnviadas();
-			lista.removeIf(new Predicate<Mensagem>() {
-				@Override
-				public boolean test(Mensagem t) {
-					if(t.getId() == m.getId()) {
-						t.getDestinatario().removerRecebida(t);
-						repositorio.remover(t);	
-						repositorio.salvarObjetos();
-						return true;		//apaga mensagem da lista
-					}
-					else
-						return false;
-				}
-
-			});
-
-		}
+		
 	}
 
 
@@ -314,9 +340,9 @@ public class Fachada {
 		return grupos;
 	}
  	
-	public static Collection<Mensagem> listarMensagens(){
+	public static ArrayList<Mensagem> listarMensagens(){
 		
-		return repositorio.getmensagens().values();
+		return repositorio.getmensagens();
 	}
 	
 	
@@ -336,14 +362,14 @@ public class Fachada {
 		
 		
 		if(termo.isEmpty()) {
-			for(Mensagem m : repositorio.getmensagens().values()) {
+			for(Mensagem m : repositorio.getmensagens()) {
 				msgs.add(m);
 			}
 		}
 		
 		
 		
-		for(Mensagem m : repositorio.getmensagens().values()) {
+		for(Mensagem m : Distinct(repositorio.getmensagens())) {
 				String[] array= m.getTexto().split(" ");
 				
 				for(String s : array) {
@@ -370,8 +396,9 @@ public class Fachada {
 			throw new Exception(nomeadmin + "não é um administrador do sistema");
 		}
 		
-		Collection<Participante> users= repositorio.getparticipantes().values();
+		Collection<Participante> users= repositorio.getparticipantes().values(); //nome dos participantes
 		ArrayList<String> lista= new ArrayList<>();
+	
 		
 		for(Participante i : users) {
 			
@@ -385,7 +412,29 @@ public class Fachada {
 	}
 	
 	
+	public static ArrayList<Mensagem> Distinct(ArrayList<Mensagem> mensagens){ //quando nao quero printar as copias de MESMO ID
+		
+		ArrayList<Mensagem> distintas= new ArrayList<>();
+		ArrayList<Integer>  aux= new ArrayList<>();
+		
+		for( Mensagem m : mensagens) {
 	
+			if(distintas.isEmpty()) {
+				aux.add(m.getId());
+				distintas.add(m);
+			}
+			else {
+				if(!aux.contains(m.getId())) {
+					aux.add(m.getId());
+					distintas.add(m);
+				}
+			}
+			
+			
+		}
+		
+		return distintas;
+	}
 	
 	
 	
