@@ -306,17 +306,21 @@ public class Fachada {
 	}
 
 
-	public static  ArrayList<Mensagem> listarMensagensEnviadas(String nome){
+	public static  ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception{
 		
 		Individual ind= repositorio.localizarIndividual(nome);
+		if (ind==null)
+			throw new Exception("Indivíduo não existe");
 		
 		return ind.getEnviadas();
 		
 	}
 	
-	public static  ArrayList<Mensagem> listarMensagensRecebidas(String nome){
+	public static  ArrayList<Mensagem> listarMensagensRecebidas(String nome) throws Exception{
 
 		Individual ind= repositorio.localizarIndividual(nome);
+		if (ind==null)
+			throw new Exception("Indivíduo não existe");
 		
 		return ind.getRecebidas();
 		
