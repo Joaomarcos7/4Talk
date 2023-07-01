@@ -100,27 +100,27 @@ public class Fachada {
 	
 	
 	public static void criarGrupo(String nome) throws Exception {
+		
 		if(nome.isEmpty()) 
-			throw new Exception("criar Grupo - nome vazio:");
-	
-		if(repositorio.getparticipantes().isEmpty()) {
+			throw new Exception("criar Grupo - nome vazio!");
+		
+			if(repositorio.getparticipantes().isEmpty()) {
+				Grupo grupo= new Grupo(nome);
+				repositorio.adicionar(grupo);
+				repositorio.salvarObjetos();
+			}
+		
+		else {
+			Participante p = repositorio.localizarParticipante(nome);
+			
+			if(p != null) 
+				throw new Exception("criar Grupo - Grupo ja existe:" + nome);
+		
 			Grupo grupo= new Grupo(nome);
 			repositorio.adicionar(grupo);
-			System.out.println(repositorio.getGrupos() + "GRUPOSSSSSSSSSSSSSSSSSSSS");
 			repositorio.salvarObjetos();
 		}
 		
-		else {
-		Participante p = repositorio.localizarParticipante(nome);
-		
-		if(p != null) 
-			throw new Exception("criar Grupo - nome ja existe:" + nome);
-
-
-		Grupo grupo= new Grupo(nome);
-		repositorio.adicionar(grupo);
-		repositorio.salvarObjetos();
-		}
 	}
 	
 	
@@ -134,8 +134,11 @@ public class Fachada {
 		
 		Grupo grupo = repositorio.localizarGrupo(nomegrupo);
 		
+		if(ind==null || grupo==null)
+			throw new Exception("Inserir Grupo -> Individuo ou grupo não existem");
+		
+		
 		grupo.adicionar(ind);
-		repositorio.adicionar(grupo);
 		repositorio.salvarObjetos();
 		
 	}
@@ -196,7 +199,6 @@ public class Fachada {
 				}
 			}
 		}
-		
 		else {
 		Mensagem mensagem = new Mensagem(idmsg,texto,emitente,destinatario,LocalDateTime.now()); //cria objeto de mensagem relacionando emitente e dest
 		emitente.setEnviadas(mensagem); //adiciono objeto mensagem no enviados do emitente
@@ -215,11 +217,11 @@ public class Fachada {
 
 		Individual emitente = repositorio.localizarIndividual(nomeind);	
 		if(emitente == null) 
-			throw new Exception("Uusário emitente nao encontrado");
+			throw new Exception("Usário emitente nao encontrado");
 
 		Participante destinatario = repositorio.localizarParticipante(nomedest);	
 		if(destinatario == null) 
-			throw new Exception("Uusário destinatário nao encontrado");
+			throw new Exception("Usário destinatário nao encontrado");
 
 		
 			ArrayList<Mensagem> enviadas= emitente.getEnviadas();

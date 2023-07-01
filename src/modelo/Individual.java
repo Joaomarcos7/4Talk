@@ -47,8 +47,13 @@ public class Individual extends Participante {
 		this.grupos = grupos;
 	}
 	
+	public void adicionar(Grupo grupo) {
+		grupos.add(grupo);
+	}
 
-
+	public void remover(Grupo grupo) {
+		grupos.remove(grupo);
+	}
 	
 	
 }
