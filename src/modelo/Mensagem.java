@@ -77,8 +77,8 @@ public class Mensagem {
 
 	@Override
 	public String toString() {
-		return "" + id + ": texto=" + texto + ", emitente=" + emitente + ", destinatario=" + destinatario
-				+ ", datahora=" + datahora + "]";
+		return "" + id + ": texto=" + texto + ", emitente=" + emitente.getNome() + ", destinatario=" + destinatario.getNome()
+				+ ", datahora=" + datahora.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")) + "]";
 	}
 	
 	

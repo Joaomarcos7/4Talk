@@ -261,7 +261,7 @@ public class Repositorio {
 				texto = partes[1];
 				nomeemitente = partes[2];
 				nomedestinatario = partes[3];
-				datahora = LocalDateTime.parse(partes[4]);
+				datahora = LocalDateTime.parse(partes[4], DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
 				emitente = this.localizarParticipante(nomeemitente);
 				destinatario = this.localizarParticipante(nomedestinatario);
 				m = new Mensagem(id,texto,emitente,destinatario,datahora);
@@ -287,7 +287,7 @@ public class Repositorio {
 						m.getTexto()+";"+
 						m.getEmitente().getNome()+";"+
 						m.getDestinatario().getNome()+";"+
-						m.getDatahora()+"\n");	
+						m.getDatahora().format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))+"\n");	
 			} 
 			arquivo1.close();
 		}

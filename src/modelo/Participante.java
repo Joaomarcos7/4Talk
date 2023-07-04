@@ -22,9 +22,27 @@ public class Participante {
 
 	@Override
 	public String toString() {
-		return "Nome:" + nome;
+		StringBuilder sb = new StringBuilder();
+		sb.append("Nome = ").append(this.getNome()).append("\n");
+		sb.append("Mensagens enviadas:");
+		if (this.getEnviadas().isEmpty())
+			sb.append(" sem mensagens enviadas");
+		else {
+			for (Mensagem m : this.getEnviadas()) {
+				sb.append("\n --> ").append(m).append("\n");
+			}
+		}
+		sb.append("Mensagens recebidas:");
+		if (this.getRecebidas().isEmpty())
+			sb.append(" sem mensagens recebidas");
+		else {
+			for (Mensagem m : this.getRecebidas()) {
+				sb.append("\n --> ").append(m).append("\n");
+			}
+		}
+		return sb.toString();
+		 
 	}
-
 
 	public String getNome() {
 		return nome;

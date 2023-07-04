@@ -14,7 +14,17 @@ public class Grupo extends Participante {
 
 	@Override
 	public String toString() {
-		return "Grupo:" +super.getNome();
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append(" individuos do grupo:");
+		if (individuos.isEmpty()) {
+			sb.append(" vazio");
+		} else {
+			for (Individual i : getIndividuos()) {
+				sb.append("\n --> ").append(i.getNome()).append("\n");
+			}
+		}
+		return sb.toString();
 	}
 
 	public ArrayList<Individual> getIndividuos() {
@@ -30,9 +40,9 @@ public class Grupo extends Participante {
 	}
 	
 	
-	public void remover(String nome) {
+	public void remover(Individual ind) {
 		for(int i=0;i<individuos.size();i++) {
-			if(individuos.get(i).getNome()==nome) {
+			if(individuos.get(i).getNome()==ind.getNome()) {
 				individuos.remove(i);
 			}
 		}

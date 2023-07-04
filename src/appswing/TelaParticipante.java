@@ -17,6 +17,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+import javax.swing.AbstractButton;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -160,8 +161,11 @@ public class TelaParticipante {
 
 			}
 		});
+		
 		button.setBounds(309, 225, 74, 23);
 		frame.getContentPane().add(button);
+		
+
 
 		panel = new JPanel();
 		panel.setBorder(new TitledBorder(
@@ -179,7 +183,63 @@ public class TelaParticipante {
 		grupobotoes = new ButtonGroup(); // permite selecao unica dos botoes
 		grupobotoes.add(radioButton);
 		grupobotoes.add(radioButton_1);
-
+		
+		
+		JLabel label_1 = new JLabel("Nome");
+		label_1.setBounds(400, 205, 45, 13);
+		frame.getContentPane().add(label_1);
+		
+		JTextField textField_1 = new JTextField();
+		textField_1.setBounds(439, 202, 96, 19);
+		frame.getContentPane().add(textField_1);
+		textField_1.setColumns(10);
+		
+		JLabel label_2 = new JLabel("Grupo");
+		label_2.setBounds(400, 235, 45, 13);
+		frame.getContentPane().add(label_2);
+		
+		JTextField textField_2 = new JTextField();
+		textField_2.setBounds(439, 232, 96, 19);
+		frame.getContentPane().add(textField_2);
+		textField_2.setColumns(10);
+		
+		AbstractButton button_1 = new JButton("Inserir");
+		button_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String nome = textField_1.getText();
+					String grupo = textField_2.getText();
+					
+					Fachada.inserirGrupo(nome, grupo);
+					label.setText("participante inserido");
+				} catch (Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		button_1.setBounds(395, 255, 85, 21);
+		frame.getContentPane().add(button_1);
+		
+		AbstractButton button_2 = new JButton("Remover");
+		button_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					String nome = textField_1.getText();
+					String grupo = textField_2.getText();
+					
+					Fachada.removerGrupo(nome, grupo);
+					label.setText("participante removido");
+				} catch (Exception ex) {
+					label.setText(ex.getMessage());
+				}
+			}
+		});
+		button_2.setBounds(490, 255, 96, 21);
+		frame.getContentPane().add(button_2);
+		
+		
+		
+		
 		// temporizador
 		timer = new Timer(0, new ActionListener() {
 			@Override

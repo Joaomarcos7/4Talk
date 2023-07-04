@@ -20,7 +20,17 @@ public class Individual extends Participante {
 
 	@Override
 	public String toString() {
-		return super.toString();
+		StringBuilder sb = new StringBuilder();
+		sb.append(super.toString());
+		sb.append(" grupos:");
+		if (this.grupos.isEmpty()) {
+			sb.append(" sem grupo");
+		} else {
+			for (Grupo g : this.getGrupos()) {
+				sb.append("\n --> ").append(g.getNome()).append("\n");
+			}
+		}
+		return sb.toString();
 	}
 
 	public String getSenha() {
