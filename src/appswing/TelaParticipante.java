@@ -98,7 +98,7 @@ public class TelaParticipante {
 			}
 		});
 		frame.setTitle("Participantes");
-		frame.setBounds(100, 100, 538, 323);
+		frame.setBounds(100, 100, 650, 323);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 

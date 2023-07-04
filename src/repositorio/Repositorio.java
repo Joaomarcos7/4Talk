@@ -287,7 +287,8 @@ public class Repositorio {
 						m.getTexto()+";"+
 						m.getEmitente().getNome()+";"+
 						m.getDestinatario().getNome()+";"+
-						m.getDatahora().format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"))+"\n");	
+						m.getDatahora()+"\n");	
+				
 			} 
 			arquivo1.close();
 		}

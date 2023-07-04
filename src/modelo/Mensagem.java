@@ -65,8 +65,8 @@ public class Mensagem {
 	}
 
 
-	public LocalDateTime getDatahora() {
-		return datahora;
+	public String getDatahora() {
+		return datahora.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
 	}
 
 
