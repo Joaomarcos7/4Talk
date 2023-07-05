@@ -89,7 +89,7 @@ public class Repositorio {
 		
 		Participante p=(Individual) participantes.get(nome);
 		
-		if (p instanceof Individual i && p!=null) {
+		if (p!=null && p instanceof Individual i) {
 			return i;
 		}
 		return null;
@@ -100,7 +100,7 @@ public class Repositorio {
 		
 		Participante p=(Grupo) participantes.get(nome);
 		
-		if(p instanceof Grupo g && p!=null) {
+		if(p!=null && p instanceof Grupo g) {
 			return g;
 		}
 		return null;
