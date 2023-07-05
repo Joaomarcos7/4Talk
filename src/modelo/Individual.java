@@ -22,7 +22,7 @@ public class Individual extends Participante {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
-		sb.append(" grupos:");
+		sb.append("\n grupos:");
 		if (this.grupos.isEmpty()) {
 			sb.append(" sem grupo");
 		} else {

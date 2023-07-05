@@ -24,20 +24,20 @@ public class Participante {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("Nome = ").append(this.getNome()).append("\n");
-		sb.append("Mensagens enviadas:");
+		sb.append(" Mensagens enviadas:");
 		if (this.getEnviadas().isEmpty())
 			sb.append(" sem mensagens enviadas");
 		else {
 			for (Mensagem m : this.getEnviadas()) {
-				sb.append("\n --> ").append(m).append("\n");
+				sb.append("\n --> ").append(m);
 			}
 		}
-		sb.append("Mensagens recebidas:");
+		sb.append("\n Mensagens recebidas:");
 		if (this.getRecebidas().isEmpty())
 			sb.append(" sem mensagens recebidas");
 		else {
 			for (Mensagem m : this.getRecebidas()) {
-				sb.append("\n --> ").append(m).append("\n");
+				sb.append("\n --> ").append(m);
 			}
 		}
 		return sb.toString();
@@ -86,16 +86,26 @@ public class Participante {
 	
 	public void removerEnviada(Mensagem msg) {
 		
-		this.getEnviadas().remove(msg);
+	for(int i=0;i<this.getEnviadas().size();i++) {
+			if(this.getEnviadas().get(i).getId()==msg.getId()) {
+				this.getEnviadas().remove(i);
+			}
+		
+		}
 		
 	}
 	
 	
 	public void removerRecebida(Mensagem msg) {
+			
+		for(int i=0;i<this.getRecebidas().size();i++) {
+			if(this.getRecebidas().get(i).getId()==msg.getId()) {
+				this.getRecebidas().remove(i);
+			}
 		
-		this.getRecebidas().remove(msg);
-		
-	}
+		}
+	
+}
 	
 	
 }

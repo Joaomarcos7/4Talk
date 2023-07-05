@@ -55,7 +55,6 @@ public class Repositorio {
 	
 	
 	public   void adicionar(Participante participante) {
-		// TODO Auto-generated method stub
 		participantes.put(participante.getNome(), participante);
 
 }
@@ -170,8 +169,19 @@ public class Repositorio {
 	
 	public void remover(Mensagem m) {
 		 
-		this.mensagens.remove(m);
+		for(int i=0;i<this.mensagens.size();i++) {
+			if(this.mensagens.get(i).getId()==m.getId()) {
+				this.mensagens.remove(i);
+			}
 		
+		}
+		
+		
+	}
+	
+	
+	public void remover(Participante p) {
+		this.participantes.remove(p.getNome());
 	}
 	
 	
@@ -261,7 +271,7 @@ public class Repositorio {
 				texto = partes[1];
 				nomeemitente = partes[2];
 				nomedestinatario = partes[3];
-				datahora = LocalDateTime.parse(partes[4], DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
+				datahora = LocalDateTime.parse(partes[4], DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 				emitente = this.localizarParticipante(nomeemitente);
 				destinatario = this.localizarParticipante(nomedestinatario);
 				m = new Mensagem(id,texto,emitente,destinatario,datahora);

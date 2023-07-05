@@ -66,7 +66,7 @@ public class Mensagem {
 
 
 	public String getDatahora() {
-		return datahora.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss"));
+		return datahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss"));
 	}
 
 
@@ -78,7 +78,7 @@ public class Mensagem {
 	@Override
 	public String toString() {
 		return "" + id + ": texto=" + texto + ", emitente=" + emitente.getNome() + ", destinatario=" + destinatario.getNome()
-				+ ", datahora=" + datahora.format(DateTimeFormatter.ofPattern("yyyyMMdd HH:mm:ss")) + "]";
+				+ ", datahora=" + datahora.format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss")) + "]";
 	}
 	
 	

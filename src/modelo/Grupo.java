@@ -16,12 +16,12 @@ public class Grupo extends Participante {
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(super.toString());
-		sb.append(" individuos do grupo:");
+		sb.append("\n individuos do grupo:");
 		if (individuos.isEmpty()) {
 			sb.append(" vazio");
 		} else {
 			for (Individual i : getIndividuos()) {
-				sb.append("\n --> ").append(i.getNome()).append("\n");
+				sb.append("\n --> ").append(i.getNome());
 			}
 		}
 		return sb.toString();

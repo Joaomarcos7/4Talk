@@ -1,11 +1,12 @@
 package regras_de_negocio;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+//import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
+//import java.util.function.Predicate;
 import java.util.function.Predicate;
 
 import modelo.Grupo;
@@ -290,42 +291,38 @@ public class Fachada {
 		}*/
 	
 	
-	
 	public static void apagarMensagem(String nomeindividuo, int id) throws  Exception{
-		Individual emitente = repositorio.localizarIndividual(nomeindividuo);	
-		if(emitente == null) 
-			throw new Exception("apagar mensagem - nome nao existe:" + nomeindividuo);
+        Individual emitente = repositorio.localizarIndividual(nomeindividuo);
+        if(emitente == null)
+            throw new Exception("apagar mensagem - nome nao existe:" + nomeindividuo);
 
-		Mensagem m = emitente.localizarEnviada(id);
-		if(m == null)
-			throw new Exception("apagar mensagem - mensagem nao pertence a este individuo:" + id);
+        Mensagem m = emitente.localizarEnviada(id);
+        if(m == null)
+            throw new Exception("apagar mensagem - mensagem nao pertence a este individuo:" + id);
 
-		emitente.removerEnviada(m);
-		Participante destinatario = m.getDestinatario();
-		
-		
-		
-		if(destinatario instanceof Grupo g) {
-			g.removerRecebida(m);
-			repositorio.remover(m);
-			
-			for(Mensagem msg : g.getEnviadas()) {
-				if(msg.getId()==m.getId())
-				{
-					g.removerEnviada(msg);
-					msg.getDestinatario().removerRecebida(msg);
-					repositorio.remover(msg);
-				}
-				
-			}
-			repositorio.salvarObjetos();
-		}
-		destinatario.removerRecebida(m);
-		repositorio.remover(m);	
-		repositorio.salvarObjetos();
+        emitente.removerEnviada(m);
+        Participante destinatario = m.getDestinatario();
+        destinatario.removerRecebida(m);
+        repositorio.remover(m);
 
-		
-	}
+        if(destinatario instanceof Grupo g) {
+            ArrayList<Mensagem> lista = destinatario.getEnviadas();
+            lista.removeIf(new Predicate<>() {
+                @Override
+                public boolean test(Mensagem t) {
+                    if (t.getId() == m.getId()) {
+                        t.getDestinatario().removerRecebida(t);
+                        repositorio.remover(t);
+                        return true;
+                    } else
+                        return false;
+                }
+
+            });
+
+        }
+        repositorio.salvarObjetos();
+    }
 
 
 	public static  ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception{
