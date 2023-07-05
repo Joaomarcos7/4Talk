@@ -78,13 +78,8 @@ public class Repositorio {
 
 	public Participante localizarParticipante(String nome) {
 		
-		for(Participante p : participantes.values()) {
-			if(p.getNome().equals(nome)) {
-				return p;
-			}
-			
-		}
-		return null;
+		
+		return participantes.get(nome);
 	}
 	
 	
