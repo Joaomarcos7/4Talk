@@ -255,14 +255,14 @@ public class Fachada {
 			
 			
 			for(Mensagem m : enviadas) {
-				if(m.getDestinatario().getNome()==nomedest) {
+				if(m.getDestinatario().getNome().equals(nomedest)) {
 					conversa.add(m);
 				}
 			}
 			
 			
 			for(Mensagem m : recebidas) {
-				if(m.getEmitente().getNome()==nomedest) {
+				if(m.getEmitente().getNome().equals(nomedest)) {
 					conversa.add(m);
 				}
 			}
@@ -435,7 +435,7 @@ public class Fachada {
 	}
 	
 	
-	public static ArrayList<Mensagem> Distinct(ArrayList<Mensagem> mensagens){ //quando nao quero printar as copias de MESMO ID
+	/*public static ArrayList<Mensagem> Distinct(ArrayList<Mensagem> mensagens){ //quando nao quero printar as copias de MESMO ID
 		
 		ArrayList<Mensagem> distintas= new ArrayList<>();
 		ArrayList<Integer>  aux= new ArrayList<>();
@@ -457,7 +457,7 @@ public class Fachada {
 		}
 		
 		return distintas;
-	}
+	}*/
 	
 	
 	

@@ -86,32 +86,13 @@ public class Repositorio {
 	
 	
 	public  Individual localizarIndividual(String nome) {
-		for(Participante p : participantes.values())
-			{
-				if(p instanceof Individual i &&  i.getNome().equals(nome) )	
-				{
-					return i;
-				}
-				
 		
-			}
-		return null;
+		return (Individual) participantes.get(nome);
 	}
 	
 	
-	
-	
-	
-	
 	public  Grupo localizarGrupo(String nome) {
-		for(Participante p : participantes.values()) {
-			
-			if(p instanceof Grupo g && g.getNome().equals(nome)) {
-				return g;
-			}
-			
-		}
-		return null;
+		return (Grupo) participantes.get(nome);
 	}
 	
 	
